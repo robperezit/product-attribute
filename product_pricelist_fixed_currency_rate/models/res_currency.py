@@ -4,7 +4,7 @@
 from odoo import api, models
 
 
-class ProductPricelist(models.Model):
+class ResCurrency(models.Model):
     _inherit = "res.currency"
 
     @api.model

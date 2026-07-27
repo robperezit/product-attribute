@@ -111,24 +111,25 @@ class TestProductPricelistFixedCurrencyRate(common.TransactionCase):
     def test_01_pricelist_currency_rate(self):
         # Product 1 (item in base pricelist)
         self.assertEqual(self.env.company.currency_id, self.env.ref("base.EUR"))
-        eur_price_1 = self.pricelist_eur._get_product_price(self.product_1, 1.0)
+        # In Odoo 14, we should use get_product_price or price_get
+        eur_price_1 = self.pricelist_eur.get_product_price(self.product_1, 1.0, False)
         self.assertEqual(eur_price_1, 140.0)
-        usd_price_1 = self.pricelist_usd._get_product_price(self.product_1, 1.0)
+        usd_price_1 = self.pricelist_usd.get_product_price(self.product_1, 1.0, False)
         expected = 140 * 1.5
         self.assertEqual(usd_price_1, expected)
-        usd_fr_price_1 = self.pricelist_usd_fixed_rate._get_product_price(
-            self.product_1, 1.0
+        usd_fr_price_1 = self.pricelist_usd_fixed_rate.get_product_price(
+            self.product_1, 1.0, False
         )
         expected = 140 * 2.0
         self.assertEqual(usd_fr_price_1, expected)
         # Product 2 (no item in base pricelist)
-        eur_price_2 = self.pricelist_eur._get_product_price(self.product_2, 1.0)
+        eur_price_2 = self.pricelist_eur.get_product_price(self.product_2, 1.0, False)
         self.assertEqual(eur_price_2, 200.0)
-        usd_price_2 = self.pricelist_usd._get_product_price(self.product_2, 1.0)
+        usd_price_2 = self.pricelist_usd.get_product_price(self.product_2, 1.0, False)
         expected = 200 * 1.5
         self.assertEqual(usd_price_2, expected)
-        usd_fr_price_2 = self.pricelist_usd_fixed_rate._get_product_price(
-            self.product_2, 1.0
+        usd_fr_price_2 = self.pricelist_usd_fixed_rate.get_product_price(
+            self.product_2, 1.0, False
         )
         expected = 200 * 2.0
         self.assertEqual(usd_fr_price_2, expected)
